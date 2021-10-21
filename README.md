@@ -1,5 +1,9 @@
 # EE5907 CA2
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 ## Environment setup
+There is a [requirements file](requirements.txt) but to avoid having to install anything outside of virtual environments conda should be used.
+
 Run
 ```
 conda create -n ee5907-ca2 -c conda-forge tensorflow-gpu jupyterlab pillow matplotlib
