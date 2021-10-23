@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""This script converts images to grayscale images and resize them into
+the same resolution as the CMU PIE image"""
+
 from pathlib import Path
 
 from PIL import Image
