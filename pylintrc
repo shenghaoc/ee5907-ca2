@@ -185,7 +185,7 @@ const-naming-style=UPPER_CASE
 
 # Regular expression matching correct constant names. Overrides const-naming-
 # style.
-const-rgx='[a-z\_][a-z0-9\_]{2,30}$'
+const-rgx=[a-z\_][a-z0-9\_]{2,30}$
 
 # Minimum line length for functions/classes that require docstrings, shorter
 # ones are exempt.
