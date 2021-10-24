@@ -1,5 +1,8 @@
 name: Build LaTeX document
-on: [push]
+on:
+  push:
+    paths:
+      - '**.tex'
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -13,17 +16,23 @@ jobs:
           compiler: pdflatex
           args: -interaction=nonstopmode -shell-escape
           working_directory: report/
-      - name: bibtex main
-        uses: dante-ev/latex-action@latest
+      # - name: bibtex main
+      #   uses: dante-ev/latex-action@latest
+      #   with:
+      #     root_file: main.aux
+      #     compiler: bibtex
+      #     args: 
+      #     working_directory: report/
+      # - name: pdflatex main
+      #   uses: dante-ev/latex-action@latest
+      #   with:
+      #     root_file: main.tex
+      #     compiler: pdflatex
+      #     args: -interaction=nonstopmode -shell-escape
+      #     working_directory: report/
+      - name: Upload
+        uses: actions/upload-artifact@master
         with:
-          root_file: main.aux
-          compiler: bibtex
-          args: 
-          working_directory: report/
-      - name: pdflatex main
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: main.tex
-          compiler: pdflatex
-          args: -interaction=nonstopmode -shell-escape
-          working_directory: report/
+          name: report
+          path: report
+        if: always()
