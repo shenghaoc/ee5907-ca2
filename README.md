@@ -6,7 +6,7 @@ There is a [requirements file](requirements.txt) but to avoid having to install 
 
 Run
 ```
-conda create -n ee5907-ca2 -c conda-forge tensorflow-gpu jupyterlab pillow matplotlib
+conda create -n ee5907-ca2 -c conda-forge tensorflow-gpu pillow matplotlib
 conda activate ee5907-ca2
 ```
 to create and activate a conda environment `ee5907-ca2` containing most of the dependencies.
