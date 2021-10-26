@@ -1,4 +1,4 @@
-$pdf_mode = 1;
-$latex = 'platex';
-$bibtex = 'pbibtex';
+$pdf_mode = 3;
+$latex = 'uplatex';
+$bibtex = 'upbibtex';
 $dvipdf = 'dvipdfmx %O -o %D %S';
