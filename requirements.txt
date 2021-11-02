@@ -1,6 +1,6 @@
 libsvm-official==3.25.0
 matplotlib==3.4.3
-numpy==1.19.5
+numpy==1.21.3
 Pillow==8.4.0
 scikit-learn==1.0.1
 scipy==1.7.1
