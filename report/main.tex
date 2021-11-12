@@ -22,6 +22,10 @@
 
 
 \begin{document}
+PCA and LDA were implemented using NumPy \cite{2020NumPy-Array}.
+Other algorithms were functions provided directly by Python packages,
+namely GMM from scikit-learn \cite{scikit-learn}, SVM from LIBSVM \cite{CC01a} and CNN from Tensorflow \cite{Abadi_TensorFlow_Large-scale_machine_2015}.
+
 For both LDA and CNN, which do not reference PCA like GMM and SVM, the full training dataset was used.
 In particular, density of visualized points is too low for LDA with only $500$ points.
 
