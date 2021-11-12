@@ -22,6 +22,13 @@
 
 
 \begin{document}
+For both LDA and CNN, which do not reference PCA like GMM and SVM, the full training dataset was used.
+In particular, density of visualized points is too low for LDA with only $500$ points.
+
+As the PIE images are labelled 1 to 68, I labelled my selfies as 69.
+For the scatter pots, colors are repeated as there is no convenient way to obtain a color directly from a number in Matplotlib,
+and the maximum number of colors in the colormaps seems to be $20$.
+
 \begin{questions}
     \question PCA based data distribution visualizations
 
@@ -91,20 +98,97 @@
             \hline
             Test Images                & Dimensionality & Accuracy                           \\
             \hline
-            \multirow{3}{4em}{CMU PIE} & 40             & \percentage{0.49019607843137253e2} \\
-                                       & 80             & \percentage{0.5247058823529411e2}  \\
-                                       & 200            & \percentage{0.552156862745098e2}   \\
+            \multirow{3}{4em}{CMU PIE} & $40$           & \percentage{0.49019607843137253e2} \\
+                                       & $80$           & \percentage{0.5247058823529411e2}  \\
+                                       & $200$          & \percentage{0.552156862745098e2}   \\
             \hline
-            \multirow{3}{4em}{Selfies} & 40             & \qty{0}{\percent}                  \\
-                                       & 80             & \qty{0}{\percent}                  \\
-                                       & 200            & \qty{0}{\percent}                  \\
+            \multirow{3}{4em}{Selfies} & $40$           & \qty{0}{\percent}                  \\
+                                       & $80$           & \qty{0}{\percent}                  \\
+                                       & $200$          & \qty{0}{\percent}                  \\
             \hline
         \end{tabular}
-        \caption{\label{tab:pca}KNN classification accuracy for dimensionalities $40$, $80$ and $200$ after PCA, for PIE images and selfies.}
+        \caption{\label{tab:pca}KNN classification accuracy for dimensionalities $40$, $80$ and $200$ after PCA with $500$ samples, for PIE images and selfies.}
     \end{table}
 
     \clearpage\question LDA based data distribution visualization
+
+    The Fisher-LDA optimization problem is
+    $$
+        \max_w \frac{w^TS_bw}{w^TS_ww}
+    $$
+    wehre $S_b$ and $S_w$ are between- and within-class scatter matrices
+    $$
+        S_b=\sum_{i=1}^N n_i(\mu_i-\mu)(\mu_i-\mu)^T\ \text{and}\ S_w=\sum_{i=1}^N\sum_{x\in \mathcal{C}_i}(x-\mu_i)(x-\mu_i)^T
+    $$
+    The solutions are the eigenvectors of $S_w^{-1}S_b$, in descending order of the corresponding eigenvalues.
+
+    Unlike PCA, which does not consider the class labels, projected points belonging to the same class are grouped together.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{lda_2d}
+        \caption{LDA projected data vector in 2D.}
+        \label{fig:lda_2d}
+    \end{figure}
+
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=0.75\textwidth]{lda_3d}
+        \caption{LDA projected data vector in 3D.}
+        \label{fig:lda_3d}
+    \end{figure}
+
     \clearpage\question LDA plus nearest neighbor classification results
+
+    For a fair comparison of PCA and LDA, PCA is rerun with the full training set.
+
+    Clearly, LDA is able to achieve the same classification accuracy with significantly fewer dimensions.
+    Exceeding PCA at $40$ dimensions using only $9$ dimensions.
+
+    In general, PCA finds the directions of maximal variance while LDA finds a feature subspace that maximizes class separability.
+    While PCA is suitable for feature extraction, LDA is better for classification, as it considers separately the within class and between class variances, minimizing the former while maximizing the latter.
+
+    It is worth noting that $LDA$ succeeds in identifying one out of three selfies with $9$ dimensions.
+    Given the difference between my selfies and the PIE images taken under more standardized conditions,
+    LDA's consideration of within class variance allows it to be more successful at classiying my selfies,
+    which would be outliers among the PIE images.
+
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{ |c|c|c|c| }
+            \hline
+            Test Images                & Dimensionality & Accuracy                          \\
+            \hline
+            \multirow{3}{4em}{CMU PIE} & $2$            & \percentage{0.4768627450980392e2} \\
+                                       & $3$            & \percentage{0.6815686274509803e2} \\
+                                       & $9$            & \percentage{0.9419607843137255e2} \\
+            \hline
+            \multirow{3}{4em}{Selfies} & $2$            & \qty{0}{\percent}                 \\
+                                       & $3$            & \qty{0}{\percent}                 \\
+                                       & $9$            & \percentage{0.3333333333333333}   \\
+            \hline
+        \end{tabular}
+        \caption{\label{tab:lda}KNN classification accuracy for dimensionalities $2$, $3$ and $9$ after LDA, for PIE images and selfies.}
+    \end{table}
+
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{ |c|c|c|c| }
+            \hline
+            Test Images                & Dimensionality & Accuracy                          \\
+            \hline
+            \multirow{3}{4em}{CMU PIE} & $40$           & \percentage{0.9388235294117647e2} \\
+                                       & $80$           & \percentage{0.96e2}               \\
+                                       & $200$          & \percentage{0.9725490196078431e2} \\
+            \hline
+            \multirow{3}{4em}{Selfies} & $40$           & \qty{0}{\percent}                 \\
+                                       & $80$           & \qty{0}{\percent}                 \\
+                                       & $200$          & \qty{0}{\percent}                 \\
+            \hline
+        \end{tabular}
+        \caption{\label{tab:full-pca}KNN classification accuracy for dimensionalities $40$, $80$ and $200$ after PCA, for PIE images and selfies.}
+    \end{table}
+
     \clearpage\question GMM for clustering
 
     For GMM, the clustering result appears to be heavily influenced by shadows or dark regions in general.
