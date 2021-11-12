@@ -74,7 +74,7 @@
         \label{fig:eigenface}
     \end{figure}
 
-    \question PCA plus nearest neighbor classification results
+    \clearpage\question PCA plus nearest neighbor classification results
 
     For classification with PCA, obtain $\mathbf{XV}$, projection of the faces in the test data matrix $\mathbf{X}$ on the
     eigenface space. Each column of $\mathbf{V}$ and therefore each column of $\mathbf{XV}$ corresponds to a principal component.\\
@@ -101,10 +101,45 @@
         \end{tabular}
     \end{center}
 
-    \question LDA based data distribution visualization
-    \question LDA plus nearest neighbor classification results
-    \question SVM classification results with different parameter values
-    \question CNN classification results with different network architectures
+    \clearpage\question LDA based data distribution visualization
+    \clearpage\question LDA plus nearest neighbor classification results
+    \clearpage\question GMM for clustering
+
+    For GMM, the clustering result appears to be heavily influenced by shadows or dark regions in general.
+    Each cluster occupies a row above their associated scatter plot, with every 15th face shown, up to a limit of 10.
+    Regardless of how or whether the input was processed, there is always one row that is of relatively uniform gray level (within each image), one row with dark region on the left, and one row with dark region on the right.
+    The algorithm does not appear to be grouping people with similar facial features together, with a European and an Asian appearing together in every cluster.
+    
+    Consider the fact that we set the number of components to be $3$. There are a lot of variations in facial features, but patches of black, regions of relatively darkness are much more uniform.
+    Therefore, the algorithm is working exactly as intended and grouping the most similar images together, those with the same illumination.
+
+    For clustering by facial features, we would need to set the number of components to be the number of distinct faces in the dataset. With $3$ components, we are doing clustering by illumination.
+
+    Clustering by illumination also means that PCA, which finds components reflecting the largest sources of variance works extremely well for reducing the number of dimensions.
+    In this case, illumination is the largest source of variation.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{gmm_1024}
+        \caption{GMM clustering for raw face images (vectorized).}
+        \label{fig:gmm_1024}
+    \end{figure}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{gmm_200}
+        \caption{GMM clustering for face vectors after PCA pre-processing (with dimensionality of 200).}
+        \label{fig:gmm_200}
+    \end{figure}
+    
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{gmm_80}
+        \caption{GMM clustering for face vectors after PCA pre-processing (with dimensionality of 80).}
+        \label{fig:gmm_80}
+    \end{figure}
+    \clearpage\question SVM classification results with different parameter values
+    \clearpage\question CNN classification results with different network architectures
 
     For CNN, the accuracy ranges from \percentage{0.95e2}to \percentage{0.97} with shuffling of the order of images.
 
