@@ -1,0 +1,9 @@
+# backend:            pgf 
+
+# text.usetex:        true
+# pgf.rcfonts:        false 
+# pgf.texsystem:      pdflatex
+# pgf.preamble:       \usepackage{cmbright}
+
+# font.family:        serif
+
