@@ -84,8 +84,8 @@
     It is expected that classfication of selfies is unsuccessful. There are only three selfies in the test
     set and random sampling of 500 images for training included only one selfie which is an outlier in 3D as can be seen from the scatter plots.
     Moreover, my setup and lighting condition differs from those of the images in the PIE data set.
-
-    \begin{center}
+    \begin{table}
+        \centering
         \begin{tabular}{ |c|c|c|c| }
             \hline
             Test Images                & Dimensionality & Accuracy                           \\
@@ -99,7 +99,8 @@
                                        & 200            & \qty{0}{\percent}                  \\
             \hline
         \end{tabular}
-    \end{center}
+        \caption{\label{tab:pca}KNN classification accuracy for dimensionalities $40$, $80$ and $200$ after PCA, for PIE images and selfies.}
+    \end{table}
 
     \clearpage\question LDA based data distribution visualization
     \clearpage\question LDA plus nearest neighbor classification results
@@ -109,7 +110,7 @@
     Each cluster occupies a row above their associated scatter plot, with every 15th face shown, up to a limit of 10.
     Regardless of how or whether the input was processed, there is always one row that is of relatively uniform gray level (within each image), one row with dark region on the left, and one row with dark region on the right.
     The algorithm does not appear to be grouping people with similar facial features together, with a European and an Asian appearing together in every cluster.
-    
+
     Consider the fact that we set the number of components to be $3$. There are a lot of variations in facial features, but patches of black, regions of relatively darkness are much more uniform.
     Therefore, the algorithm is working exactly as intended and grouping the most similar images together, those with the same illumination.
 
@@ -131,7 +132,7 @@
         \caption{GMM clustering for face vectors after PCA pre-processing (with dimensionality of 200).}
         \label{fig:gmm_200}
     \end{figure}
-    
+
     \begin{figure}[h]
         \centering
         \includegraphics[width=0.75\textwidth]{gmm_80}
@@ -139,6 +140,44 @@
         \label{fig:gmm_80}
     \end{figure}
     \clearpage\question SVM classification results with different parameter values
+
+    From Tab.~\ref{tab:svm}, we can see that SVM classification achieves much higher accuracy than that of KNN in Tab.~\ref{tab:pca}.
+    More principle components improves the classification accuracy, with $200$ principle components, the classfication accuracy is the same as using raw images.
+
+    However, the parameter $C$ appears to have no impact on the classfication accuracy.
+    There is an explanation online for this \cite{238209}.
+    Of the two criteria, the use of a linear SVM is stated in the instructions for this assignment.
+
+    According to Rasmussen \& Williams \cite{10.5555/1162254}, ``In a feature space of dimension $N$, if $N>n$ then there will always be a separating hyperplane.
+    However this hyperplane may not give rise to good generalization performance, especially if some of the labels are incorrect.''
+
+    For $PCA$, $500$ data points were sampled, less than $1024$. The data is linearly separable, meeting the other criterion.
+
+    Therefore, ``if $C$ values change within a reasonable range, the optimal hyperplane will just randomly shift by a small amount within the margin (the gap formed by the support vectors).
+    Intuitively, suppose the margin on training data is small, and/or there is no test data points within the margin too, the shifting of the optimal hyperplane within the margin will not affect classification error of the test set.''
+
+    \begin{table}[hb]
+        \centering
+        \begin{tabular}{ |c|c|c|c| }
+            \hline
+            Test Images                  & C    & Accuracy                \\
+            \hline
+            \multirow{3}{4em}{Raw}       & 0.01 & \qty{98.4351}{\percent} \\
+                                         & 0.1  & \qty{98.4351}{\percent} \\
+                                         & 1    & \qty{98.4351}{\percent} \\
+            \hline
+            \multirow{3}{4em}{PCA (200)} & 0.01 & \qty{98.4351}{\percent} \\
+                                         & 0.1  & \qty{98.4351}{\percent} \\
+                                         & 1    & \qty{98.4351}{\percent} \\
+            \hline
+            \multirow{3}{4em}{PCA (80)}  & 0.01 & \qty{97.9656}{\percent} \\
+                                         & 0.1  & \qty{97.9656}{\percent} \\
+                                         & 1    & \qty{97.9656}{\percent} \\
+            \hline
+        \end{tabular}
+        \caption{\label{tab:svm}SVM classification accuracy for dimensionalities $40$, $80$ and $200$ after PCA.}
+    \end{table}
+
     \clearpage\question CNN classification results with different network architectures
 
     For CNN, the accuracy ranges from \percentage{0.95e2}to \percentage{0.97} with shuffling of the order of images.
@@ -153,7 +192,7 @@
     For classification of two or more labels using one-hot encoded representation, categorical crossentropy is the option in Keras.
     The final layer uses a softmax function to convert logits to probabilities. Otherwise, ReLU is used to introduce nonlinearity.
 
-    The latest optimizer offered by Keras, the AMSGrad variant of ADAM was used for best performance. 
+    The latest optimizer offered by Keras, the AMSGrad variant of ADAM was used for best performance.
     As ADAM is an adaptive algorithm, no tuning of the learning rate was necessary or offered any improvement to classfication accuracy.
 
     \begin{footnotesize}
@@ -207,5 +246,7 @@
         \label{fig:epoch_loss}
     \end{figure}
 \end{questions}
-
+\clearpage
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
 \end{document}
