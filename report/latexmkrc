@@ -1,4 +1,2 @@
-$pdf_mode = 3;
-$latex = 'uplatex';
-$bibtex = 'upbibtex';
-$dvipdf = 'dvipdfmx %O -o %D %S';
+$pdf_mode = 1;
+$pdflatex = 'pdflatex -shell-escape';
