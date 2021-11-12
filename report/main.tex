@@ -27,7 +27,7 @@ In particular, density of visualized points is too low for LDA with only $500$ p
 
 As the PIE images are labelled 1 to 68, I labelled my selfies as 69.
 For the scatter pots, colors are repeated as there is no convenient way to obtain a color directly from a number in Matplotlib,
-and the maximum number of colors in the colormaps seems to be $20$.
+and the maximum number of colors in the colormaps seems to be $20$. Selfies are distinguished with a red star.
 
 \begin{questions}
     \question PCA based data distribution visualizations
@@ -37,7 +37,7 @@ and the maximum number of colors in the colormaps seems to be $20$.
     \begin{equation}
         \mathbf{X}=\mathbf{USV^T}
     \end{equation}
-    The columns of $\mathbf{US}$ are the principal components and the columns of $\mathbf{V}$ are the eigenfaces.\\
+    The columns of $\mathbf{XV}=\mathbf{USV^TV}=\mathbf{US}$ are the principal components and the columns of $\mathbf{V}$ are the eigenfaces.\\
     For the principal components, only calculation for the highest dimension is necessary. For reduction to
     dimension $k$, the first $k$ principal components can be obtained from the first $k$ columns of
     $\mathbf{U}$ and the diagonal matrix formed by the first $k$ values along the diagonal of $\mathbf{S}$.
@@ -86,12 +86,12 @@ and the maximum number of colors in the colormaps seems to be $20$.
 
     For classification with PCA, obtain $\mathbf{XV}$, projection of the faces in the test data matrix $\mathbf{X}$ on the
     eigenface space. Each column of $\mathbf{V}$ and therefore each column of $\mathbf{XV}$ corresponds to a principal component.\\
-    Again, only calculation for the highest dimension is necessary. The first $k$ projections can be obtained
-    with the test data matrix and the first $k$ columns of $\mathbf{V}$.
 
     It is expected that classfication of selfies is unsuccessful. There are only three selfies in the test
     set and random sampling of 500 images for training included only one selfie which is an outlier in 3D as can be seen from the scatter plots.
     Moreover, my setup and lighting condition differs from those of the images in the PIE data set.
+    illumination is a challenge for many computer vision problems.
+
     \begin{table}
         \centering
         \begin{tabular}{ |c|c|c|c| }
@@ -121,6 +121,7 @@ and the maximum number of colors in the colormaps seems to be $20$.
         S_b=\sum_{i=1}^N n_i(\mu_i-\mu)(\mu_i-\mu)^T\ \text{and}\ S_w=\sum_{i=1}^N\sum_{x\in \mathcal{C}_i}(x-\mu_i)(x-\mu_i)^T
     $$
     The solutions are the eigenvectors of $S_w^{-1}S_b$, in descending order of the corresponding eigenvalues.
+    Perform projection as with PCA.
 
     Unlike PCA, which does not consider the class labels, projected points belonging to the same class are grouped together.
 
