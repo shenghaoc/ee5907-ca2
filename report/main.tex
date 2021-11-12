@@ -6,6 +6,7 @@
 \usepackage{multirow}
 \usepackage{siunitx}
 \usepackage{svg}
+\usepackage{minted}
 
 \firstpageheader{EE5907}{CA2}{\today}
 \runningheader{EE5907}{CA2 (Continued)}{\today}
@@ -195,8 +196,8 @@
     The latest optimizer offered by Keras, the AMSGrad variant of ADAM was used for best performance.
     As ADAM is an adaptive algorithm, no tuning of the learning rate was necessary or offered any improvement to classfication accuracy.
 
-    \begin{footnotesize}
-        \begin{verbatim}
+    \begin{listing}[!ht]
+        \begin{minted}{text}
         Model: "sequential"
         _________________________________________________________________
          Layer (type)                Output Shape              Param #   
@@ -224,8 +225,10 @@
         Trainable params: 664,096
         Non-trainable params: 0
         _________________________________________________________________
-    \end{verbatim}
-    \end{footnotesize}
+        \end{minted}
+        \caption{Summary of CNN.}
+        \label{listing:1}
+    \end{listing}
 
 
     For simplicity, I arbitrarily set the number epochs to $100$ with batch size of $128$.
